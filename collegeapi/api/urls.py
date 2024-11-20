@@ -8,5 +8,6 @@ router.register(r'lecturers', views.LecturerViewSet)
 router.register(r'students', views.StudentViewSet)
 
 urlpatterns = [ 
-    path('', include(router.urls)), 
+    path('', include(router.urls)),
+    path('student/number/<str:student_number>/', views.StudentByNumberDetail.as_view(), name='student_by_number_detail'),
 ]
