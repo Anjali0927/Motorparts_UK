@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+function Courses({title}) {
+  return <li>{title}</li>;
 }
 
-export default App
+function CourseFetcher() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/courses?format=json')
+      .then((response) => response.json())
+      .then((data) => setData(data));
+  }, []);
+
+  return (
+    <div>
+      {/* data ? <p>Data: {JSON.stringify(data)}</p> : <p>Loading...</p> */}
+ 
+      <h1>Courses</h1>
+      {data && data.length > 0 ? (
+        <ul>
+          {data.map((course, index) => (
+            <Courses key={index} title={course.title || course.name || `Course ${index + 1}`} />
+          ))}
+        </ul>
+      ) : (
+        <p>Loading...</p>
+      )}
+
+    </div>
+  );
+}
+
+export default CourseFetcher;
