@@ -7,51 +7,63 @@ from .models import Course, Lecturer, Student
 from .serializers import CourseSerializer, LecturerSerializer, StudentSerializer
 
 # Create your views here.
-class CourseViewSet(viewsets.ModelViewSet): 
+class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            course = self.get_object()
+            course.delete()
+
+            return Response(
+                {'message': 'Course deleted successfully.'}, 
+                status=status.HTTP_204_NO_CONTENT
+            )
+
+        except Course.DoesNotExist:
+            return Response(
+                {'error': 'Course not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
 
 class LecturerViewSet(viewsets.ModelViewSet): 
     queryset = Lecturer.objects.all()
     serializer_class = LecturerSerializer
 
+    def destroy(self, request, *args, **kwargs):
+        try:
+            course = self.get_object()
+            lecturer.delete()
+
+            return Response(
+                {'message': 'Lecturer deleted successfully.'}, 
+                status=status.HTTP_204_NO_CONTENT
+            )
+
+        except Lecturer.DoesNotExist:
+            return Response(
+                {'error': 'Lecturer not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
 class StudentViewSet(viewsets.ModelViewSet): 
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
-class StudentByNumberDetail(APIView):
-    def get(self, request, student_number):
+    def destroy(self, request, *args, **kwargs):
         try:
-            student = Student.objects.get(student_number=student_number)
-            serializer = StudentSerializer(student)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Student.DoesNotExist:
-            return Response({'error': 'Student not found'}, status=status.HTTP_404_NOT_FOUND)
-        
-    def post(self, request, student_number):
-        data = request.data
-        data['student_number'] = student_number
-        serializer = StudentSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def put(self, request, student_number):
-        try:
-            student = Student.objects.get(student_number=student_number)
-            serializer = StudentSerializer(student, data=request.data, partial=True)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except Student.DoesNotExist:
-            return Response({'error': 'Student not found'}, status=status.HTTP_404_NOT_FOUND)
-
-    def delete(self, request, student_number):
-        try:
-            student = Student.objects.get(student_number=student_number)
+            student = self.get_object()
             student.delete()
-            return Response({'message': 'Student deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
-        except Student.DoesNotExist:
-            return Response({'error': 'Student not found'}, status=status.HTTP_404_NOT_FOUND)
+
+            return Response(
+                {'message': 'Student deleted successfully.'}, 
+                status=status.HTTP_204_NO_CONTENT
+            )
+
+        except Course.DoesNotExist:
+            return Response(
+                {'error': 'Student not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )

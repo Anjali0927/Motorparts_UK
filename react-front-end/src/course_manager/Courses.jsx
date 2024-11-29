@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 /*
 {
@@ -11,10 +12,10 @@ import React, { useState, useEffect } from 'react';
 */
 
 function Courses({title}) {
-  return <li>{title}</li>;
+  return <p>{title}</p>;
 }
 
-function CourseFetcher() {
+function NewCourse() {
   const [data, setData] = useState(null);
   const [titleValue, setTitleValue] = useState('');
   const [descriptionValue, setDescriptionValue] = useState('');
@@ -28,19 +29,38 @@ function CourseFetcher() {
 
   return (
     <div className="p-8">
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white">Courses</h1>
+      <h1 className="mb-8 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white">Courses</h1>
+      <Link
+      to="/course/new"
+      className=""
+      >
+        Add Course | 
+      </Link>
+      <Link
+      to="/course/edit"
+      className="pl-2"
+      >
+        Edit Course |
+      </Link>
+      <Link
+      to="/course/delete"
+      className="pl-2"
+      >
+        Delete Course
+      </Link>
+
       {data && data.length > 0 ? (
-        <ul>
+        <ul className="mt-8">
           {data.map((course, index) => (
             <Courses key={index} title={course.title || course.name || `Course ${index + 1}`} />
           ))}
         </ul>
       ) : (
-        <p>Loading...</p>
+        <p className="mt-8">There are no courses to view.</p>
       )}
 
     </div>
   );
 }
 
-export default CourseFetcher;
+export default NewCourse;

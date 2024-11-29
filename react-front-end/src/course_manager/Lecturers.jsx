@@ -10,11 +10,11 @@ import React, { useState, useEffect } from 'react';
 }
 */
 
-function Lecturers({first_name, last_name}) {
+function Lecturer({first_name, last_name}) {
   return <li>{first_name} {last_name}</li>;
 }
 
-function LecturerFetcher() {
+function Lecturers() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function LecturerFetcher() {
       {data && data.length > 0 ? (
         <ul>
           {data.map((lecturer, index) => (
-            <Lecturers key={index} first_name={lecturer.first_name} last_name={lecturer.last_name} />
+            <Lecturer key={index} id={lecturer.id} first_name={lecturer.first_name} last_name={lecturer.last_name} />
           ))}
         </ul>
       ) : (
@@ -40,4 +40,4 @@ function LecturerFetcher() {
   );
 }
 
-export default LecturerFetcher;
+export default Lecturers;

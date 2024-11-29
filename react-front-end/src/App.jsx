@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Nav from './course_manager/Nav'
 import Home from './course_manager/Home'
-import CourseFetcher from './course_manager/CoursesFetcher';
-import LecturerFetcher from './course_manager/LecturersFetcher';
-import StudentFetcher from './course_manager/StudentsFetcher';
+import Courses from './course_manager/Courses';
+//import CourseNew from './course_manager/CourseNew';
+//import CourseEdit from './course_manager/CourseEdit';
+//import CourseDelete from './course_manager/CourseDelete';
 import './App.css'
 
 function App() {
@@ -12,9 +13,7 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/courses" element={<CourseFetcher />} />
-        <Route path="/lecturers" element={<LecturerFetcher />} />
-        <Route path="/students" element={<StudentFetcher />} />
+        <Route path="/courses" element={<Courses />} />
       </Routes>
     </BrowserRouter>
   )
