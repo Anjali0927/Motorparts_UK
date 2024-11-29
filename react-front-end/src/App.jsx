@@ -1,35 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Nav from './course_manager/Nav'
+import Home from './course_manager/Home'
+import CourseFetcher from './course_manager/CoursesFetcher';
+import LecturerFetcher from './course_manager/LecturersFetcher';
+import StudentFetcher from './course_manager/StudentsFetcher';
+import './App.css'
 
-function Courses({title}) {
-  return <li>{title}</li>;
-}
-
-function CourseFetcher() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    fetch('/api/courses?format=json')
-      .then((response) => response.json())
-      .then((data) => setData(data));
-  }, []);
-
+function App() {
   return (
-    <div>
-      {/* data ? <p>Data: {JSON.stringify(data)}</p> : <p>Loading...</p> */}
- 
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Courses</h1>
-      {data && data.length > 0 ? (
-        <ul>
-          {data.map((course, index) => (
-            <Courses key={index} title={course.title || course.name || `Course ${index + 1}`} />
-          ))}
-        </ul>
-      ) : (
-        <p>Loading...</p>
-      )}
-
-    </div>
-  );
+    <BrowserRouter>
+      <Nav />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/courses" element={<CourseFetcher />} />
+        <Route path="/lecturers" element={<LecturerFetcher />} />
+        <Route path="/students" element={<StudentFetcher />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
-export default CourseFetcher;
+
+export default App;
