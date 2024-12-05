@@ -22,7 +22,7 @@ function NewCourse() {
   const [lecturerValue, setLecturerValue] = useState('');
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/courses?format=json')
+    fetch('/api/courses/?format=json')
       .then((response) => response.json())
       .then((data) => setData(data))
       .catch((e) => console.log(e))
