@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// function StudentEdit() {
+//   const [data, setData] = useState([]);
+//   const [selectedStudent, setSelectedStudent] = useState('');
+//   const [FirstNameValue, setFirstnameValue] = useState('');
+//   const [LastNameValue, setLastNameValue] = useState('');
+//   const [emailValue, setEmailValue] = useState('');
+//   const [StudentNumberValue, setStudentNumberValue] = useState([]);
+
+
 function CourseEdit() {
   const [data, setData] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState('');

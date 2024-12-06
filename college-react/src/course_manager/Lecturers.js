@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 /*
 {
@@ -26,15 +27,37 @@ function Lecturers() {
   return (
     <div className="p-8">
       <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white">Lecturers</h1>
-      {data && data.length > 0 ? (
-        <ul>
-          {data.map((lecturer, index) => (
-            <Lecturer key={index} id={lecturer.id} first_name={lecturer.first_name} last_name={lecturer.last_name} />
-          ))}
-        </ul>
-      ) : (
-        <p>Loading...</p>
-      )}
+      <Link
+      to="/lecturer/new"
+      className=""
+      >
+        Add Lecturer | 
+      </Link>
+      <Link
+      to="/lecturer/edit"
+      className="pl-2"
+      >
+        Edit Lecturer |
+      </Link>
+      <Link
+      to="/lecturer/delete"
+      className="pl-2"
+      >
+        Delete Lecturer
+      </Link>
+
+      <div className="mt-4 mb-4 p-4 border rounded-lg shadow-sm">
+      <h3 className="mb-2 text-xl font-bold">Lecturers</h3>
+        {data && data.length > 0 ? (
+          <ul>
+            {data.map((lecturer, index) => (
+              <Lecturer key={index} id={lecturer.id} first_name={lecturer.first_name} last_name={lecturer.last_name} />
+            ))}
+          </ul>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
 
     </div>
   );

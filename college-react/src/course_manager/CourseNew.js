@@ -5,7 +5,7 @@ function Courses({ title }) {
   return <li>{title}</li>;
 }
 
-function CourseFetcher() {
+function CourseNew() {
   const [data, setData] = useState([]);
   const [lock, setLock] = useState(false);
   const [titleValue, setTitleValue] = useState('');
@@ -129,4 +129,4 @@ function CourseFetcher() {
   );
 }
 
-export default CourseFetcher;
+export default CourseNew;
