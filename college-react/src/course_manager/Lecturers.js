@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-/*
-{
-    "id": 1,
-    "first_name": "Chris",
-    "last_name": "Matchett",
-    "email": "chrismatchett@hotmail.com",
-    "staff_number": "1"
-}
-*/
-
 function Lecturer({first_name, last_name}) {
   return <li>{first_name} {last_name}</li>;
 }

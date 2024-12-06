@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-/*
-{
-    "id": 1,
-    "first_name": "Chris",
-    "last_name": "Matchett",
-    "email": "chrismatchett@hotmail.com",
-    "student_number": "123"
-}
-*/
-
 function StudentDelete() {
   const [data, setData] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState('');

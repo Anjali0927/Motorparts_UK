@@ -1,26 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-/*
-{
-    "id": 1,
-    "title": "React for Dummies (like Chris)",
-    "description": "Learn how to use React, Vite to communicate with a Django API",
-    "lecturer": {
-        "id": 1,
-        "first_name": "John",
-        "last_name": "Doe"
-    },
-    "students": [
-        {
-            "id": 1,
-            "first_name": "Jane",
-            "last_name": "Smith"
-        }
-    ]
-}
-*/
-
 function Course({ title, description, lecturer, students }) {
   return (
     <div className="mt-4 mb-4 p-4 border rounded-lg shadow-sm">
