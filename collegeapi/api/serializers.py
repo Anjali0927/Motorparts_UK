@@ -1,17 +1,32 @@
 from rest_framework import serializers 
-from .models import Course, Lecturer, Student 
+from .models import User, Customer, SalesTeam, Location, Opportunity, Client
 
-class CourseSerializer(serializers.ModelSerializer): 
+class UserSerializer(serializers.ModelSerializer): 
     class Meta: 
-        model = Course 
+        model = User
         fields = '__all__'
 
-class LecturerSerializer(serializers.ModelSerializer): 
+class CustomerSerializer(serializers.ModelSerializer): 
     class Meta: 
-        model = Lecturer 
+        model = Customer
         fields = '__all__'
 
-class StudentSerializer(serializers.ModelSerializer): 
+class SalesTeamSerializer(serializers.ModelSerializer): 
     class Meta: 
-        model = Student 
+        model = SalesTeam
+        fields = '__all__'
+
+class LocationSerializer(serializers.ModelSerializer): 
+    class Meta: 
+        model = Location
+        fields = '__all__'
+
+class OpportunitySerializer(serializers.ModelSerializer): 
+    class Meta: 
+        model = Opportunity
+        fields = '__all__'
+
+class ClientSerializer(serializers.ModelSerializer): 
+    class Meta: 
+        model = Client
         fields = '__all__'

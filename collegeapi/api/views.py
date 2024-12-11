@@ -1,48 +1,36 @@
-#from django.shortcuts import render
+    #from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Course, Lecturer, Student 
-from .serializers import CourseSerializer, LecturerSerializer, StudentSerializer
+from .models import User, Customer, SalesTeam, Location, Opportunity, Client
+from .serializers import UserSerializer, CustomerSerializer, SalesTeamSerializer, LocationSerializer, OpportunitySerializer, ClientSerializer
 
 # Create your views here.
-class CourseViewSet(viewsets.ModelViewSet): 
-    queryset = Course.objects.all()
-    serializer_class = CourseSerializer
+class UserViewSet(viewsets.ModelViewSet): 
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-class LecturerViewSet(viewsets.ModelViewSet): 
-    queryset = Lecturer.objects.all()
-    serializer_class = LecturerSerializer
+class CustomerViewSet(viewsets.ModelViewSet): 
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
 
-class StudentViewSet(viewsets.ModelViewSet): 
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+class SalesTeamViewSet(viewsets.ModelViewSet): 
+    queryset = SalesTeam.objects.all()
+    serializer_class = SalesTeamSerializer
 
-class StudentByNumberDetail(APIView):
-    def get(self, request, student_number):
-        try:
-            student = Student.objects.get(student_number=student_number)
-            serializer = StudentSerializer(student)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Student.DoesNotExist:
-            return Response({'error': 'Student not found'}, status=status.HTTP_404_NOT_FOUND)
-        
-class TotalCoursesView(APIView):
-    def get(self, request):
-        count = Course.objects.count()
-        return Response({'total_courses': count})
+class LocationViewSet(viewsets.ModelViewSet): 
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
 
-class TotalEnrolledStudentsView(APIView):
-    def get(self, request):
-        total_students = Course.objects.values('students').distinct().count()
-        return Response({'total_enrolled_students': total_students})
+class OpportunityViewSet(viewsets.ModelViewSet): 
+    queryset = Opportunity.objects.all()
+    serializer_class = OpportunitySerializer
 
-class StudentsInCourseView(APIView):
-    def get(self, request, course_id):
-        try:
-            course = Course.objects.get(pk=course_id)
-            num_students = course.students.count()
-            return Response({'course_id': course_id, 'students_enrolled': num_students})
-        except Course.DoesNotExist:
-            return Response({'error': 'Course not found'}, status=status.HTTP_404_NOT_FOUND)
+class ClientViewSet(viewsets.ModelViewSet): 
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+    
+
+
+
