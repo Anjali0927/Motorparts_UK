@@ -30,3 +30,8 @@ class ClientSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Client
         fields = '__all__'
+
+
+class StatusCountSerializer(serializers.Serializer):
+    status = serializers.CharField()
+    count = serializers.IntegerField()

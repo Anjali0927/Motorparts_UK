@@ -1,12 +1,14 @@
 from django.db import models
 
+from django.db import models
+
 # Create your models here.
 class Location(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=100)
     county = models.CharField(max_length=100)
-    postcode = models.CharField(max_length=20)
+    postcode = models.CharField(max_length=20)  
 
     def __str__(self): 
         return self.name
@@ -26,6 +28,7 @@ class Client(models.Model):
     name = models.CharField(max_length=100)
     industry = models.CharField(max_length=50)
     contact = models.CharField(max_length=100)
+    active = models.BooleanField(default=True)
 
     def __str__(self): 
         return self.name
@@ -52,10 +55,23 @@ class SalesTeam(models.Model):
         return self.name
 
 class Opportunity(models.Model):
+    STATUS_CHOICES = [
+    ('new', 'New'),
+    ('qualified', 'Qualified'),
+    ('proposal_sent', 'Proposal Sent'),
+    ('negotiation', 'Negotiation'),
+    ('won', 'Won'),
+    ('lost', 'Lost'),
+    ('on_hold', 'On Hold'),
+    ('closed', 'Closed'),
+    ('disqualified', 'Disqualified'),
+    ('follow_up', 'Follow-Up Required'),
+    ]
+
     name = models.CharField(max_length=100)
     description = models.TextField()
     value = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=50)
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='new')
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     sales_team = models.ForeignKey(SalesTeam, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
