@@ -15,14 +15,22 @@ class SalesTeamSerializer(serializers.ModelSerializer):
     class Meta: 
         model = SalesTeam
         fields = '__all__'
+        manager = UserSerializer(read_only=True)
+        sales_reps = UserSerializer(many=True, read_only=True)
+        customers = CustomerSerializer(many=True, read_only=True)
+
 
 class LocationSerializer(serializers.ModelSerializer): 
     class Meta: 
         model = Location
         fields = '__all__'
 
-class OpportunitySerializer(serializers.ModelSerializer): 
-    class Meta: 
+class OpportunitySerializer(serializers.ModelSerializer):
+    customer = serializers.PrimaryKeyRelatedField(queryset=Customer.objects.all())
+    sales_team = serializers.PrimaryKeyRelatedField(queryset=SalesTeam.objects.all())
+    location = serializers.PrimaryKeyRelatedField(queryset=Location.objects.all())
+
+    class Meta:
         model = Opportunity
         fields = '__all__'
 
@@ -30,7 +38,6 @@ class ClientSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Client
         fields = '__all__'
-
 
 class StatusCountSerializer(serializers.Serializer):
     status = serializers.CharField()
