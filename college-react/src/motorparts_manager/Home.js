@@ -22,7 +22,7 @@ function Home() {
         <div className="p-4 bg-white rounded shadow">
           <ActiveClients />
         </div>
-        <div className="p-4 bg-white rounded shadow">
+        <div className="p-4 col-span-2 justify-stretch bg-white rounded shadow">
           <CustomersByLocation />
         </div>
         <div className="p-4 bg-white rounded shadow">

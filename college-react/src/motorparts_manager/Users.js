@@ -176,22 +176,32 @@ const Users = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Users</h1>
-      <div className="flex flex-row flex-wrap justify-between">
+      <div className="flex flex-row flex-wrap justify-between basis-3/12">
         <form onSubmit={handleSubmit} className="mb-4 w-full lg:w-1/2 xl:w-1/3">
-          <input type="text" name="first_name" placeholder="First Name" value={formData.first_name} onChange={handleChange} className="block mb-2 p-2 border" />
-          <input type="text" name="last_name" placeholder="Last Name" value={formData.last_name} onChange={handleChange} className="block mb-2 p-2 border" />
-          <input type="text" name="position" placeholder="Position" value={formData.position} onChange={handleChange} className="block mb-2 p-2 border" />
-          <input type="text" name="phone_number" placeholder="Phone Number" value={formData.phone_number} onChange={handleChange} className="block mb-2 p-2 border" />
-          <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="block mb-2 p-2 border" />
-          <input type="text" name="role" placeholder="Role" value={formData.role} onChange={handleChange} className="block mb-2 p-2 border" />
+          <input type="text" name="first_name" placeholder="First Name" value={formData.first_name} onChange={handleChange} className="block w-full mb-2 p-2 border" />
+          <input type="text" name="last_name" placeholder="Last Name" value={formData.last_name} onChange={handleChange} className="block w-full mb-2 p-2 border" />
+          <input type="text" name="position" placeholder="Position" value={formData.position} onChange={handleChange} className="block w-full mb-2 p-2 border" />
+          <input type="text" name="phone_number" placeholder="Phone Number" value={formData.phone_number} onChange={handleChange} className="block w-full mb-2 p-2 border" />
+          <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="block w-full mb-2 p-2 border" />
+          <input type="text" name="role" placeholder="Role" value={formData.role} onChange={handleChange} className="block w-full mb-2 p-2 border" />
           <button type="submit" className="bg-blue-500 text-white p-2">{editMode ? 'Update User' : 'Add User'}</button>
         </form>
-        <ul className="w-full lg:w-1/2 xl:w-2/3">
+        <ul className="basis-7/12 lg:w-1/2 xl:w-2/3">
           {users.map(user => (
-            <li key={user.id} className="mb-2 p-2 border">
-              {user.first_name} {user.last_name} - {user.position} - {user.phone_number} - {user.email} - {user.role}
-              <button onClick={() => handleEdit(user)} className="bg-yellow-500 text-white p-1 ml-2">Edit</button>
-              <button onClick={() => handleDelete(user.id)} className="bg-red-500 text-white p-1 ml-2">Delete</button>
+            <li key={user.id} className="mb-2 p-2 w-full border">
+              <div className="flex justify-between">
+                <div>
+                  <p><strong>{user.first_name} {user.last_name}</strong></p>
+                  <p>{user.position}</p>
+                  <p>{user.phone_number}</p>
+                  <p>{user.email}</p>
+                  <p>{user.role}</p>
+                </div>
+                <div>
+                  <button onClick={() => handleEdit(user)} className="bg-yellow-500 text-white p-1 ml-2">Edit</button>
+                  <button onClick={() => handleDelete(user.id)} className="bg-red-500 text-white p-1 ml-2">Delete</button>
+                </div>
+              </div>
             </li>
           ))}
         </ul>

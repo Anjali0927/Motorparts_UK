@@ -21,7 +21,7 @@ const SalesTeam = () => {
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
-    fetch('/api/sales-teams/')
+    fetch('/api/salesteams/')
       .then(res => res.json())
       .then(data => setSalesTeams(data))
       .catch(err => showError(err));
@@ -57,9 +57,10 @@ const SalesTeam = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Submitting data:", formData);
     const submitAction = () => {
       if (editMode) {
-        fetch(`/api/sales-teams/${currentId}/`, {
+        fetch(`/api/salesteams/${currentId}/`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -80,7 +81,7 @@ const SalesTeam = () => {
           })
           .catch(err => showError(err));
       } else {
-        fetch('/api/sales-teams/', {
+        fetch('/api/salesteams/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -131,7 +132,7 @@ const SalesTeam = () => {
       onConfirm: () => {
         setShowModal(false);
         const submitAction = () => {
-          fetch(`/api/sales-teams/${currentId}/`, {
+          fetch(`/api/salesteams/${currentId}/`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -165,7 +166,7 @@ const SalesTeam = () => {
       onClose: () => setShowModal(false),
       onConfirm: () => {
         setShowModal(false);
-        fetch(`/api/sales-teams/${id}/`, {
+        fetch(`/api/salesteams/${id}/`, {
           method: 'DELETE',
         })
           .then(() => {
@@ -187,62 +188,71 @@ const SalesTeam = () => {
     });
   };
 
-return (
-<div className="container mx-auto p-4">
-<h1 className="text-2xl font-bold mb-4">Sales Teams</h1>
-<div className="flex flex-row flex-wrap justify-between">
-<form onSubmit={handleSubmit} className="mb-4 w-full lg:w-1/2 xl:w-1/3">
-<input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} className="block mb-2 p-2 border" />
-<select name="manager" value={formData.manager} onChange={handleChange} className="block mb-2 p-2 border">
-<option value="">Select Manager</option>
-{users.map(user => (
-  <option key={user.id} value={user.id}>
-    {user.first_name} {user.last_name}
-  </option>
-))}
-</select>
-<select multiple name="sales_reps" value={formData.sales_reps} onChange={handleMultiSelectChange} className="block mb-2 p-2 border">
-<option value="">Select Sales Reps</option>
-{users.map(user => (
-  <option key={user.id} value={user.id}>
-    {user.first_name} {user.last_name}
-  </option>
-))}
-</select>
-<select multiple name="customers" value={formData.customers} onChange={handleMultiSelectChange} className="block mb-2 p-2 border">
-<option value="">Select Customers</option>
-{customers.map(customer => (
-  <option key={customer.id} value={customer.id}>
-    {customer.first_name} {customer.last_name}
-  </option>
-))}
-</select>
-<button type="submit" className="bg-blue-500 text-white p-2">{editMode ? 'Update Sales Team' : 'Add Sales Team'}</button>
-</form>
-<ul className="w-full lg:w-1/2 xl:w-2/3">
-{salesTeams.map(team => (
-<li key={team.id} className="mb-2 p-2 border">
-  <div className="flex justify-between">
-    <div>
-      <p><strong>Name:</strong> {team.name}</p>
-      <p><strong>Manager:</strong> {team.manager.first_name} {team.manager.last_name}</p>
-      <p><strong>Sales Reps:</strong> {team.sales_reps.map(rep => `${rep.first_name} ${rep.last_name}`).join(', ')}</p>
-      <p><strong>Customers:</strong> {team.customers.map(customer => `${customer.first_name} ${customer.last_name}`).join(', ')}</p>
+  const getUserNameById = (id) => {
+    const user = users.find(user => user.id === id);
+    return user ? `${user.first_name} ${user.last_name}` : 'Unknown';
+  };
+
+  const getCustomerNameById = (id) => {
+    const customer = customers.find(customer => customer.id === id);
+    return customer ? `${customer.first_name} ${customer.last_name}` : 'Unknown';
+  };
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Sales Teams</h1>
+      <div className="flex flex-row flex-wrap basis-3/12 justify-between">
+        <form onSubmit={handleSubmit} className="mb-4 lg:w-1/2 xl:w-1/3">
+          <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} className="block mb-2 p-2 border w-full" />
+          <select name="manager" value={formData.manager} onChange={handleChange} className="block mb-2 p-2 border w-full">
+            <option value="">Select Manager</option>
+            {users.map(user => (
+              <option key={user.id} value={user.id}>
+                {user.first_name} {user.last_name}
+              </option>
+            ))}
+          </select>
+          <select multiple name="sales_reps" value={formData.sales_reps} onChange={handleMultiSelectChange} className="block mb-2 p-2 border w-full">
+            <option value="">Select Sales Reps</option>
+            {users.map(user => (
+              <option key={user.id} value={user.id}>
+                {user.first_name} {user.last_name}
+              </option>
+            ))}
+          </select>
+          <select multiple name="customers" value={formData.customers} onChange={handleMultiSelectChange} className="block mb-2 p-2 border w-full">
+            <option value="">Select Customers</option>
+            {customers.map(customer => (
+              <option key={customer.id} value={customer.id}>
+                {customer.first_name} {customer.last_name}
+              </option>
+            ))}
+          </select>
+          <button type="submit" className="bg-blue-500 text-white p-2">{editMode ? 'Update Sales Team' : 'Add Sales Team'}</button>
+        </form>
+        <ul className="basis-7/12 lg:w-1/2 xl:w-2/3">
+          {salesTeams.map(team => (
+            <li key={team.id} className="mb-2 p-2 border">
+              <div className="flex justify-between">
+                <div>
+                  <p><strong>Name:</strong> {team.name}</p>
+                  <p><strong>Manager:</strong> {getUserNameById(team.manager)}</p>
+                  <p><strong>Sales Reps:</strong> {team.sales_reps.map(rep => getUserNameById(rep)).join(', ')}</p>
+                  <p><strong>Customers:</strong> {team.customers.map(customer => getCustomerNameById(customer)).join(', ')}</p>
+                </div>
+                <div>
+                  <button onClick={() => handleEdit(team)} className="bg-yellow-500 text-white p-1 ml-2">Edit</button>
+                  <button onClick={() => handleDelete(team.id)} className="bg-red-500 text-white p-1 ml-2">Delete</button>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Modal show={showModal} {...modalProps} />
+      <Notification message={notification.message} type={notification.type} onClose={() => setNotification({ message: '', type: '' })} />
     </div>
-    <div>
-      <button onClick={() => handleEdit(team)} className="bg-yellow-500 text-white p-1 ml-2">Edit</button>
-      <button onClick={() => handleDelete(team.id)} className="bg-red-500 text-white p-1 ml-2">Delete</button>
-    </div>
-  </div>
-</li>
-))}
-</ul>
-</div>
-<Modal show={showModal} {...modalProps} />
-<Notification message={notification.message} type={notification.type} onClose={() => setNotification({ message: '', type: '' })} />
-</div>
-);
+  );
 };
 
 export default SalesTeam;
- 

@@ -21,13 +21,15 @@ function TotalRevenue() {
   }, []);
 
   return (
-    <div className="p-4 bg-white shadow rounded-md mb-4">
-      <h2 className="text-xl font-bold mb-2">Total Revenue</h2>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <p className="text-lg">${totalRevenue.toLocaleString()}</p>
-      )}
+    <div className='flex'>
+      <div className="p-4 bg-white shadow rounded-md mb-4 flex-1 size-full">
+        <h2 className="text-xl font-bold mb-2">Total Revenue</h2>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <p className="text-lg">${totalRevenue.toLocaleString()}</p>
+        )}
+      </div>
     </div>
   );
 }

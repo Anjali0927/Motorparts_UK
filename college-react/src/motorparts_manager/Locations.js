@@ -171,27 +171,39 @@ const Location = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Locations</h1>
-      <form onSubmit={handleSubmit} className="mb-4">
-        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} className="block mb-2 p-2 border" />
-        <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} className="block mb-2 p-2 border" />
-        <input type="text" name="city" placeholder="City" value={formData.city} onChange={handleChange} className="block mb-2 p-2 border" />
-        <input type="text" name="county" placeholder="County" value={formData.county} onChange={handleChange} className="block mb-2 p-2 border" />
-        <input type="text" name="postcode" placeholder="Postcode" value={formData.postcode} onChange={handleChange} className="block mb-2 p-2 border" />
-        <button type="submit" className="bg-blue-500 text-white p-2">{editMode ? 'Update Location' : 'Add Location'}</button>
-      </form>
-      <ul>
-        {locations.map(location => (
-          <li key={location.id} className="mb-2 p-2 border">
-            {location.name} - {location.address} - {location.city} - {location.county} - {location.postcode}
-            <button onClick={() => handleEdit(location)} className="bg-yellow-500 text-white p-1 ml-2">Edit</button>
-            <button onClick={() => handleDelete(location.id)} className="bg-red-500 text-white p-1 ml-2">Delete</button>
-          </li>
-        ))}
-      </ul>
+      <div className="flex flex-row flex-wrap justify-between basis-3/12">
+        <form onSubmit={handleSubmit} className="mb-4 w-full lg:w-1/2 xl:w-1/3">
+          <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} className="block mb-2 w-full p-2 border" />
+          <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} className="block w-full mb-2 p-2 border" />
+          <input type="text" name="city" placeholder="City" value={formData.city} onChange={handleChange} className="block mb-2 w-full p-2 border" />
+          <input type="text" name="county" placeholder="County" value={formData.county} onChange={handleChange} className="block mb-2 w-full p-2 border" />
+          <input type="text" name="postcode" placeholder="Postcode" value={formData.postcode} onChange={handleChange} className="block mb-2 w-full p-2 border" />
+          <button type="submit" className="bg-blue-500 text-white p-2">{editMode ? 'Update Location' : 'Add Location'}</button>
+        </form>
+        <ul className="basis-7/12 lg:w-1/2 xl:w-2/3">
+          {locations.map(location => (
+            <li key={location.id} className="mb-2 p-2 border">
+              <div className="flex justify-between">
+                <div>
+                  <p><strong>{location.name}</strong></p>
+                  <p>{location.address}</p>
+                  <p>{location.city}</p>
+                  <p>{location.county}</p>
+                  <p>{location.postcode}</p>
+                </div>
+                <div>
+                  <button onClick={() => handleEdit(location)} className="bg-yellow-500 text-white p-1 ml-2">Edit</button>
+                  <button onClick={() => handleDelete(location.id)} className="bg-red-500 text-white p-1 ml-2">Delete</button>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
       <Modal show={showModal} {...modalProps} />
       <Notification message={notification.message} type={notification.type} onClose={() => setNotification({ message: '', type: '' })} />
     </div>
   );
-};
+}  
 
 export default Location;

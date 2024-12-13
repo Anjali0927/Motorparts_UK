@@ -2,6 +2,7 @@
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 from django.db.models import Count, Sum, Avg
 from .serializers import StatusCountSerializer
 from .models import User, Customer, SalesTeam, Location, Opportunity, Client
@@ -24,9 +25,40 @@ class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
 
-class OpportunityViewSet(viewsets.ModelViewSet): 
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework import viewsets
+from .serializers import OpportunitySerializer
+from .models import Opportunity
+
+class OpportunityViewSet(viewsets.ModelViewSet):
     queryset = Opportunity.objects.all()
     serializer_class = OpportunitySerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            self.perform_create(serializer)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print("CREATE Error:", serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        try:
+            partial = kwargs.pop('partial', False)
+            instance = self.get_object()
+            serializer = self.get_serializer(instance, data=request.data, partial=partial)
+            if serializer.is_valid():
+                self.perform_update(serializer)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                print("UPDATE Error:", serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            print("UPDATE Exception:", str(e))
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class ClientViewSet(viewsets.ModelViewSet): 
     queryset = Client.objects.all()
